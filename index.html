@@ -17,9 +17,16 @@ function start() {
     //'scope': 'profile',
   }).then(function() {
     // 3. Initialize and make the API request.
-    return gapi.client.request({
-      'path': 'https://people.googleapis.com/v1/people/me?requestMask.includeField=person.names',
-    })
+    
+	 gapi.client.sheets.spreadsheets.values.get({
+  spreadsheetId: datacontainer,
+  //range: range
+}).then((response) => {
+  var result = response.result;
+  var numRows = result.values ? result.values.length : 0;
+  console.log(`${numRows} rows retrieved.`);
+}); 
+	  
   }).then(function(response) {
     console.log(response.result);
   }, function(reason) {
